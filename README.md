@@ -1,8 +1,8 @@
-# Repo Scripts
+# Repo Shared Scripts and Configuration
 
 
 ## About
-Common scripts used in Combostrap repository
+Common scripts and configuration used in Combostrap repositories
 
 ## Usage Steps
 
@@ -11,7 +11,7 @@ Common scripts used in Combostrap repository
 Add it as submodule in your repo
 
 ```bash
-git submodule add --name repo-scripts https://github.com/combostrap/repo-scripts.git .repo-scripts
+git submodule add --name repo-shared https://github.com/combostrap/repo-shared.git .repo-shared
 ```
 
 ### Add it as Git directory in your IDE
@@ -20,12 +20,12 @@ Optional, needed only if you want to commit to it from a submodule.
 
 Because it's a config/hidden directory, IDE may not see them.
 
-In Idea, you need to add the directory mapping (Settings > Version Control > Directory mapping) 
+In Idea, you need to add the directory mapping (Settings > Version Control > Directory mapping)
 because Intellij will not discover it automatically.
 
 
 ### Project Env
- 
+
 Project Env in [.envrc](.envrc) (used in scripts)
 ```bash
 echo "Project: "
@@ -39,12 +39,22 @@ echo "   Project Root      : $PROJECT_ROOT"
 
 git config in [.envrc](.envrc)
 ```bash
-.repo-scripts/git/config
+.repo-shared/git/config
 ```
 
 ### Maven scripts
 
-maven scripts in [.envrc](.envrc)
+Maven scripts in [.envrc](.envrc)
 ```bash
-export PATH="$PATH:$PWD/.repo-scripts/maven"
+export PATH="$PATH:$PWD/.repo-shared/maven"
 ```
+
+### Editor Config
+
+For code styling in [.envrc](.envrc)
+```bash
+rsync $PWD/.repo-shared/editorconfig/root/.editorconfig $PWD/.editorconfig
+```
+
+Check that editor config is enabled in your IDE.
+* [Idea Intellij](https://www.jetbrains.com/help/idea/editorconfig.html#disable-editorconfig)

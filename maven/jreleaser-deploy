@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -TCEeuo pipefail # Strict Bash
 
-# Ref
-# https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_maven
+# Deploy to maven central
+# Ref: https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_maven
 
 # Verify release & deploy configuration
 echo "Check config"
