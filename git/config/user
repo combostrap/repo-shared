@@ -25,15 +25,6 @@ check_env_var() {
 # Mandatory to determine the name of user env
 check_env_var "PROJECT_ORGANISATION_NAME" "$PROJECT_ORGANISATION_NAME" || return 1
 
-echo ""
-echo "Git configuration applied:"
-# Git Hooks
-# Add the git_hooks directory (modify the .git/config file)
-SCRIPT_PATH="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-GIT_HOOKS="$SCRIPT_PATH/hooks"
-git config core.hooksPath "$GIT_HOOKS"
-echo "   HooksPath: $GIT_HOOKS"
-
 
 # Git User Email
 # Env name should be uppercase without minus

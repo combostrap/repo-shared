@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Configuration of git called by envrc
+
+# Strict Bash
+set -TCEeuo pipefail
+
+# Git Hooks
+# Add the git_hooks directory (modify the .git/config file)
+
+GIT_HOOKS="${1:-$PROJECT_ROOT/.git-hooks}"
+if [ ! -d "$GIT_HOOKS" ]; then
+  mkdir -p "$GIT_HOOKS"
+fi
+
+git config core.hooksPath "$GIT_HOOKS"
+echo "   Git HooksPath: $GIT_HOOKS"
