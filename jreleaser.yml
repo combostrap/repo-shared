@@ -1,0 +1,48 @@
+
+# https://jreleaser.org/guide/latest/reference/project.html
+project:
+  name: repo-manager
+  #version: '{{projectVersion}}'
+  description: Manage your repositories configurations centrally
+  longDescription: |
+    Manage, init and update the common stuff on all your Git repositories.
+  authors:
+    - Combostrap Team
+  copyright: '2025 combostrap.com'
+  license: Apache-2.0
+  inceptionYear: '2025'
+  vendor: Combostrap
+  tags:
+    - direnv
+    - git-config
+    - editorconfig
+    - git-hooks
+  links:
+    homepage: https://www.tabulify.com
+    documentation: https://www.tabulify.com
+  stereotype: NONE
+
+# Create a GitHub release
+# https://jreleaser.org/guide/latest/reference/release/github.html
+release:
+  github:
+    owner: combostrap
+    releaseName: "Release {{projectEffectiveVersion}}"
+    prerelease:
+      # # A regex to determine if the project version is a prerelease
+      pattern: .*-rc.*
+    # https://jreleaser.org/guide/latest/reference/release/changelog.html
+    changelog:
+      formatted: ALWAYS
+      format: '- {{commitShortHash}} {{commitTitle}}'
+      preset: 'conventional-commits'
+      content: |
+        # Changelog Version {{projectEffectiveVersion}}
+
+        {{changelogChanges}}
+
+# Create signatures files for the distributions files and the checksum files
+signing:
+  active: ALWAYS
+  mode: COMMAND
+

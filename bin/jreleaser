@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# jreleaser wrapper to inject secrets env
+
+set -TCEeuo pipefail
+
+if [ -z "$ORGANISATION_ENV_NAME" ]; then
+  echo "ERROR: ORGANISATION_NAME environment variable is not set"
+  exit 1
+fi
+ORGANISATION_NAME_NORMALIZED=$(echo "$ORGANISATION_ENV_NAME" | tr '[:upper:]' '[:lower:]' | tr '_' '-' )
+
+export JRELEASER_MAVENCENTRAL_USERNAME
+JRELEASER_MAVENCENTRAL_USERNAME=$(pass "$ORGANISATION_NAME_NORMALIZED/sonatype/username")
+
+export JRELEASER_MAVENCENTRAL_PASSWORD
+JRELEASER_MAVENCENTRAL_PASSWORD=$(pass "$ORGANISATION_NAME_NORMALIZED/sonatype/password")
+
+export JRELEASER_GPG_PASSPHRASE
+JRELEASER_GPG_PASSPHRASE=$(pass "$ORGANISATION_NAME_NORMALIZED/gpg/software-signing-key-passphrase")
+
+export JRELEASER_GITHUB_TOKEN
+JRELEASER_GITHUB_TOKEN=$(pass "$ORGANISATION_NAME_NORMALIZED/github/release-token")
+
+# For snapshot
+export JRELEASER_NEXUS2_USERNAME="${JRELEASER_MAVENCENTRAL_USERNAME}"
+export JRELEASER_NEXUS2_PASSWORD="${JRELEASER_MAVENCENTRAL_PASSWORD}"
+
+# Run
+"$(which -a jreleaser | tail -1)" "$@"
