@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Markdown Link Check Script
+# This script loops through all subdirectories and runs markdown-link-check
+# while avoiding 'test' and 'build' directories
+
+set -e  # Exit on any error
+
+checked_dirs=0
+BASEDIR=${ML_BASEDIR:-$PROJECT_ROOT}
+SKIP_REGEX=${ML_SKIP_REGEX:-}
+# Loop through all subdirectories
+failed=false
+for childPath in "$BASEDIR"/*; do
+  if [ ! -d "$childPath" ]; then
+      continue
+  fi
+  if [[ "$childPath" =~ $SKIP_REGEX ]]; then
+      continue
+  fi
+  echo "$childPath"
+  if ! markdown-link-check --config markdown-lint-config.json --quiet "$childPath" ; then
+    failed=true
+  fi
+done
+echo "$checked_dirs found"
+
+if [[ $failed == true ]]; then
+  echo "Markdown lint Failed"
+  exit 1
+fi
+

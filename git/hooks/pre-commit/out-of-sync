@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -TCEeuo pipefail
+
 git fetch
 
 LOCAL=$(git rev-parse @)

@@ -46,8 +46,8 @@ The git hooks directory is configured to `.git-hooks` (See [Git Hooks configurat
 
 And the following hooks are synced in it:
 
-* [commit message hook](git/hooks/commit-msg) - for commit lint check
-* [pre-commit](git/hooks/pre-commit) - to check for out of sync branch
+* [commit message hook](git/hooks/commit-msg/commit-lint) - for commit lint check
+* [pre-commit](git/hooks/pre-commit/out-of-sync) - to check for out of sync branch
 
 ### Scripts in PATH
 
@@ -55,7 +55,7 @@ Install the common [scripts](bin) in the `PATH`
 
 ### Editor Config for code styling
 
-Install the [root editor config](editorconfig/root/.editorconfig)
+Install the [root editor config](copier/.editorconfig)
 
 ### Copy .gitignore and .gitattributes if not found
 

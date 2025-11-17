@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Disallow push to default branch
+# https://gist.github.com/kalpeshsingh/e7682478b8927700c714f12e37f0837e
+
+set -TCEeuo pipefail
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+default=$(git remote show origin | grep "HEAD branch" | sed 's/.*: //')
+
+# a branch name where you want to prevent git push. In this case, it's "master"
+if [ "$branch" == "$default" ]; then
+  echo "You can't commit directly to '\"${branch}\"' branch" # webstorm or intellij will show this as popup
+  exit 1 # if you remove this line then it won't block push but send message to group and on command line
+fi
