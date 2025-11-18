@@ -1,8 +1,10 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+# No tag as rev because they can be overwritten while sha cannot
+# Check the code
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: 3e8a870 # v6.0.0
     hooks:
       - id: trailing-whitespace # trims trailing whitespace
       - id: end-of-file-fixer # makes sure files end in a newline and only a newline.
@@ -13,12 +15,12 @@ repos:
       - id: check-merge-conflict
         args: [ --assume-in-merge ]
   - repo: https://github.com/tcort/markdown-link-check
-    rev: v3.14.1
+    rev: 3c9471f # v3.14.1
     hooks:
       - id: markdown-link-check
         args: [ --quiet, "--config", ".config/markdown-lint-config.json" ]
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-    rev: v9.23.0
+    rev: e46582c # v9.23.0
     hooks:
       # equivalent to:
       # commitlint --extends '@commitlint/config-conventional' --verbose --edit  "$1"
@@ -27,6 +29,6 @@ repos:
         additional_dependencies: [ '@commitlint/config-conventional' ]
         args: [ "--verbose" , "--config", ".config/commitlint.config.js" ]
   - repo: https://github.com/combostrap/repo-manager
-    rev: 096af74
+    rev: 096af74 # sha allowed (https://pre-commit.com/#using-the-latest-version-for-a-repository to update pre-commit autoupdate)
     hooks:
       - id: prevent-out-of-sync-commit
