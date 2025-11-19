@@ -33,10 +33,13 @@ license_type:
     # https://spdx.org/licenses/MIT.html
     - MIT
 
-releaser_name:
-  default: jreleaser
+# package manager
+# used to put in the path package manager specific scripts
+# mostly release
+package_manager:
+  default: none
   choices:
-    - jreleaser
+    - maven
     - none
 
 # Where the responses are stored
