@@ -42,15 +42,15 @@ if command -v pre-commit &> /dev/null; then
   echo "Pre-commit:"
   if [ ! -f "$PROJECT_ROOT/.git/hooks/pre-commit" ]; then
       pre-commit install
-      echo "   Pre-commit hooks installed"
+      echo "   Pre-commit hooks : installed"
   else
-      echo "   Pre-commit hooks enabled"
+      echo "   Pre-commit hooks : enabled"
   fi
   if [ ! -f "$PROJECT_ROOT/.git/hooks/commit-msg" ]; then
       pre-commit install --hook-type commit-msg
-      echo "   Commit-msg hooks installed"
+      echo "   Commit-msg hooks : installed"
   else
-      echo "   Commit-msg hooks enabled"
+      echo "   Commit-msg hooks : enabled"
   fi
 
 else
@@ -88,7 +88,7 @@ if [ -d "$RM_DIR" ]; then
     #################
     echo ""
     echo "Repo manager: "
-    echo "   RM_DIR : $RM_DIR"
+    echo "   Repo Directory               : $RM_DIR"
 
     #################
     # Bin
@@ -98,7 +98,7 @@ if [ -d "$RM_DIR" ]; then
     echo "   Common Scripts Path          : $BIN_PATH"
     BIN_PACKAGE_MANAGER_PATH="$RM_DIR/bin/package-manager{{ package_manager }}"
     export PATH="$BIN_PACKAGE_MANAGER_PATH:$PATH" # bin path first as it has a higher priority
-    echo "   Package Manager Scripts Path : $$BIN_PACKAGE_MANAGER_PATH"
+    echo "   Package Manager Scripts Path : $BIN_PACKAGE_MANAGER_PATH"
 
     echo ""
     echo "Git: "

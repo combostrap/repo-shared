@@ -14,7 +14,7 @@ EMAIL_VALUE="${!EMAIL_VAR:-}"
 if rm_check_env_var "$EMAIL_VAR" "$EMAIL_VALUE" "$USER_ENV_SCOPE"; then
 
   git config user.email "$EMAIL_VALUE"
-  echo "   Email: $EMAIL_VALUE"
+  echo "   Email     : $EMAIL_VALUE"
 
 else
 
@@ -29,10 +29,10 @@ SIGNING_KEY_VALUE="${!SIGNING_KEY_VAR:-}"
 if rm_check_env_var "$SIGNING_KEY_VAR" "$SIGNING_KEY_VALUE" "$USER_ENV_SCOPE"; then
 
   git config user.signingkey "$SIGNING_KEY_VALUE"
-  echo "   GPG Key: $SIGNING_KEY_VALUE"
+  echo "   GPG Key  : $SIGNING_KEY_VALUE"
 
   git config commit.gpgsign true
-  echo "   GPG Sign: true"
+  echo "   GPG Sign : true"
 
 else
 
