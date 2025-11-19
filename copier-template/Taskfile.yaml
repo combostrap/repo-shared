@@ -6,3 +6,8 @@ tasks:
     cmds:
       - |
         git add -A && pre-commit run
+  # Update this repo with the copier-template
+  update:
+    cmds:
+      - |
+        copier update .

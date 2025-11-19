@@ -31,6 +31,7 @@ Install:
 * [copier](https://copier.readthedocs.io/en/stable/#installation)
 * [direnv](https://direnv.net/docs/installation.html)
 * [pre-commit](https://pre-commit.com/#install)
+* [task](https://taskfile.dev/docs/installation) `optional`
 
 ### Copy or update this copier template
 
@@ -118,8 +119,17 @@ your shell profile, `~/.bashrc`, or `~/.config/direnv/direnvrc`, or `~/.envrc.lo
 You can check the files in you next commit with:
 ```bash
 task prepare
-# equivalent of
+# equivalent to
 git add -A && pre-commit run
 # or with the common dev script
 git-prepare
+```
+
+### Repository update
+
+You can update this repo to the last copier template with:
+```bash
+task update
+# equivalent to
+copier update .
 ```

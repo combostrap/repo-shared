@@ -2,6 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 # No tag as rev because they can be overwritten while sha cannot
 # Check the code
+# For update to the last commit `pre-commit autoupdate`. See https://pre-commit.com/#using-the-latest-version-for-a-repository
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 3e8a870 # v6.0.0
@@ -29,6 +30,6 @@ repos:
         additional_dependencies: [ '@commitlint/config-conventional' ]
         args: [ "--verbose" , "--config", ".config/commitlint.config.js" ]
   - repo: https://github.com/combostrap/repo-manager
-    rev: 096af74 # sha allowed (https://pre-commit.com/#using-the-latest-version-for-a-repository to update pre-commit autoupdate)
+    rev: 096af74
     hooks:
       - id: prevent-out-of-sync-commit
