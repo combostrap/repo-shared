@@ -32,7 +32,7 @@ repos:
         additional_dependencies: [ '@commitlint/config-conventional' ]
         args: [ "--verbose" , "--config", ".config/commitlint.config.js" ]
   - repo: https://github.com/combostrap/repo-manager
-    rev: 096af74
+    rev: 7191c53f9ed71c7261a47da693c82069c561b227
     hooks:
       - id: git-fetch
       - id: prevent-out-of-sync-commit
