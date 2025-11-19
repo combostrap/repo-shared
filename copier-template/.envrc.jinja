@@ -10,7 +10,7 @@ echo ""
 ###################
 # Common function
 ###################
-function rm_echo_yellow(){
+function repm_echo_yellow(){
     YELLOW="\033[0;33m"
     NO_COLOR="\033[0m"
     echo -e "${YELLOW}$1$NO_COLOR"
@@ -63,40 +63,40 @@ fi
 # Bin script installation
 # The installation is done by cloning the repo to a well-known location.
 #################
-export RM_PREFIX="RM"
-RM_DIR_VAR_NAME="${RM_PREFIX}${ORGANISATION_ENV_NAME}_DIR"
-export RM_DIR
-RM_DIR=$(realpath "${!RM_DIR_VAR_NAME:-$PWD/../repo-manager}")
-if [ ! -d "$RM_DIR" ]; then
+export REPM_PREFIX="REPM"
+REPM_DIR_VAR_NAME="${REPM_PREFIX}${ORGANISATION_ENV_NAME}_DIR"
+export REPM_DIR
+REPM_DIR=$(realpath "${!REPM_DIR_VAR_NAME:-$PWD/../repo-manager}")
+if [ ! -d "$REPM_DIR" ]; then
 
-    RM_REPO_URI_VAR_NAME="${RM_PREFIX}${ORGANISATION_ENV_NAME}_URI"
-    RM_REPO_URI="${!RM_REPO_URI_VAR_NAME:-https://github.com/combostrap/repo-manager}"
-    rm_echo_yellow "Clone $RM_REPO_URI to $RM_DIR? Y(Yes-Default)/N(No)"
+    REPM_REPO_URI_VAR_NAME="${REPM_PREFIX}${ORGANISATION_ENV_NAME}_URI"
+    REPM_REPO_URI="${!REPM_REPO_URI_VAR_NAME:-https://github.com/combostrap/repo-manager}"
+    repm_echo_yellow "Clone $REPM_REPO_URI to $REPM_DIR? Y(Yes-Default)/N(No)"
     read -r CLONE
     if [ "$CLONE" == "" ] || [ "$CLONE" == "Y" ]; then
-        git clone "$RM_REPO_URI" "$RM_DIR"
-        rm_echo_yellow "Repo Manager repo cloned"
+        git clone "$REPM_REPO_URI" "$REPM_DIR"
+        repm_echo_yellow "Repo Manager repo cloned"
     fi
 
 fi
 
 # Exit if the repo was not installed
-if [ -d "$RM_DIR" ]; then
+if [ -d "$REPM_DIR" ]; then
 
     #################
-    # RM
+    # REPM
     #################
     echo ""
     echo "Repo manager: "
-    echo "   Repo Directory               : $RM_DIR"
+    echo "   Repo Directory               : $REPM_DIR"
 
     #################
     # Bin
     #################
-    BIN_PATH="$RM_DIR/bin"
+    BIN_PATH="$REPM_DIR/bin"
     export PATH="$BIN_PATH:$PATH" # bin path first as it has a higher priority
     echo "   Common Scripts Path          : $BIN_PATH"
-    BIN_PACKAGE_MANAGER_PATH="$RM_DIR/bin/package-manager/{{ package_manager }}"
+    BIN_PACKAGE_MANAGER_PATH="$REPM_DIR/bin/package-manager/{{ package_manager }}"
     export PATH="$BIN_PACKAGE_MANAGER_PATH:$PATH" # bin path first as it has a higher priority
     echo "   Package Manager Scripts Path : $BIN_PACKAGE_MANAGER_PATH"
 

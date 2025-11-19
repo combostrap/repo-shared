@@ -4,12 +4,12 @@
 # Strict Bash
 set -TCEeuo pipefail
 
-source "$RM_DIR/bin/lib/resource-manager-lib.sh"
+source "$REPM_DIR/bin/lib/resource-manager-lib.sh"
 
 
 # Git User Email
 # Env name should be uppercase without minus
-EMAIL_VAR="${RM_PREFIX}_${ORGANISATION_ENV_NAME}_EMAIL"
+EMAIL_VAR="${REPM_PREFIX}_${ORGANISATION_ENV_NAME}_EMAIL"
 EMAIL_VALUE="${!EMAIL_VAR:-}"
 if rm_check_env_var "$EMAIL_VAR" "$EMAIL_VALUE" "$USER_ENV_SCOPE"; then
 
@@ -24,7 +24,7 @@ fi
 
 # Git signing key is the long format dir
 # gpg --list-secret-keys --keyid-format=long
-SIGNING_KEY_VAR="${RM_PREFIX}_${ORGANISATION_ENV_NAME}_SIGNING_KEY"
+SIGNING_KEY_VAR="${REPM_PREFIX}_${ORGANISATION_ENV_NAME}_SIGNING_KEY"
 SIGNING_KEY_VALUE="${!SIGNING_KEY_VAR:-}"
 if rm_check_env_var "$SIGNING_KEY_VAR" "$SIGNING_KEY_VALUE" "$USER_ENV_SCOPE"; then
 

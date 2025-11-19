@@ -1,4 +1,4 @@
-# Repo Manager: Dynamic Repository Management
+# Repo Manager (repm): Dynamic Repository Management
 
 ## About
 
@@ -71,10 +71,10 @@ direnv reload
 
 To set the git user, you can set in your `.bashrc` the following env:
 
-| Env                                    |
-|----------------------------------------|
-| `GIT_${ORGANIZATION_NAME}_EMAIL`       |
-| `GIT_${ORGANIZATION_NAME}_SIGNING_KEY` |
+| Env                                     |
+|-----------------------------------------|
+| `REPM_${ORGANIZATION_NAME}_EMAIL`       |
+| `REPM_${ORGANIZATION_NAME}_SIGNING_KEY` |
 
 See the [Git User Configuration Script](bin/git-config-user)
 
@@ -109,8 +109,8 @@ following variable in your shell profile, `~/.bashrc`, or `~/.config/direnv/dire
 
 | Environment | Default  Value                             | Description                                                             |
 |-------------|--------------------------------------------|-------------------------------------------------------------------------|
-| `RM_DIR`    | `$PROJET_ROOT/../repo-manager`             | The local file system location of the resource manager repository clone |
-| `RM_URI`    | https://github.com/combostrap/repo-manager | The URI location of the resource manager repository                     |
+| `REPM_DIR`  | `$PROJET_ROOT/../repo-manager`             | The local file system location of the resource manager repository clone |
+| `REPM_URI`  | https://github.com/combostrap/repo-manager | The URI location of the resource manager repository                     |
 
 #### Scripts Environment variable
 
