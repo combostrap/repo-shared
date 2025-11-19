@@ -7,6 +7,7 @@ tasks:
       - |
         git add -A && pre-commit run
   # Update this repo with the copier-template
+  # `--vcs-ref HEAD` to avoid `You are downgrading from 0.1.0.post2.dev0+0a9a33e to 0.1.0. Downgrades are not supported.`
   update:
     cmds:
       - |
