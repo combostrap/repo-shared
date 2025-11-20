@@ -24,7 +24,7 @@ repos:
     hooks:
       - id: markdown-link-check
         name: markdown link check
-        args: [ --quiet, "--config", ".config/markdown-lint-config.json" ]
+        args: [ --quiet, "--config", ".config/markdown-link-check.config.json" ]
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
     rev: e46582c # v9.23.0
     hooks:
