@@ -123,6 +123,9 @@ if [ -d "$DEVF_DIR" ]; then
     if [ "$PACKAGE_MANAGER" == "maven" ]; then
       echo ""
       echo "Maven: "
+      SDKMAN_MAVEN_VERSION=$(grep -oP 'apache-maven/\K[0-9]+\.[0-9]+\.[0-9]+' .mvn/wrapper/maven-wrapper.properties)
+      echo "   Version: $SDKMAN_MAVEN_VERSION"
+
       # mvn setup
       if ! command -v mvn &> /dev/null; then
         echo "Maven mvn command not found in the path. Installing it with sdkman"
@@ -130,8 +133,6 @@ if [ -d "$DEVF_DIR" ]; then
           # Sdk man init
           source "$DEV_SCRIPT_PATH/setup/sdkman.sh"
         fi
-        SDKMAN_MAVEN_VERSION=$(grep -oP 'apache-maven/\K[0-9]+\.[0-9]+\.[0-9]+' .mvn/wrapper/maven-wrapper.properties)
-        echo "    Version: $SDKMAN_MAVEN_VERSION"
         if ! sdk home maven "${SDKMAN_MAVEN_VERSION}" >/dev/null; then
           devf_echo_yellow "Maven installation with sdkman"
           sdk install maven "${SDKMAN_MAVEN_VERSION}"
@@ -147,7 +148,7 @@ if [ -d "$DEVF_DIR" ]; then
       fi
     fi
 else
-  devf_echo_yellow "warning: devfiles repo not installed: git, maven and common script not configured"
+  devf_echo_yellow "WARNING: devfiles repo not installed: git, maven and common script not configured"
 fi
 
 ##############################

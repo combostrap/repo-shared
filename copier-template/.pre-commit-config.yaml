@@ -44,3 +44,4 @@ repos:
     rev: c9d5ed0 # v3.4.1
     hooks:
       - id: editorconfig-checker
+        exclude: "LICENSE"
