@@ -12,3 +12,8 @@ tasks:
     cmds:
       - |
         copier update --vcs-ref HEAD .
+  # Release
+  release:
+    cmds:
+      - |
+        {{.TASKFILE_DIR}}/release

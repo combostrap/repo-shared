@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -TCEeuo pipefail # Strict Bash
+
+# The release script of this repo
+# It's mandatory because the tag version is in the .pre-commit-config.yaml tag file
+# so we need to update it
+
+bump_type=${1:-"patch"}  # or minor, major
+# Get the tags locally
+git pull
+# calculate the next version
+export GIT_CLIFF__BUMP__INITIAL_TAG=v0.1.0 # by default it's 0.1.0
+next_version=$(git cliff --unreleased --bump "$bump_type" --context  --tag-pattern "v[0-9]+\\.[0-9]+\\.[0-9]+" | jq -r '.[0].version' | tr -d "v")
+
+# Update in-place the version
+yq -i "(.repos[] | select(.repo | match(\".*$ORGANISATION_PATH_NAME/devfiles$\")) | .rev) = \"v$next_version\"" copier-template/.pre-commit-config.yaml
+git-commit "chore: release $next_version"
+
+echo "Releasing to the version $next_version"
+# release
+JRELEASER_PROJECT_VERSION="$next_version" jreleaser release
+# Tag is created locally and remotely (force pull)
+# git refuse otherwise with `tag would clobber existing tag`
+git pull --force
+echo "Release done"
