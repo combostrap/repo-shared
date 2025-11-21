@@ -38,11 +38,13 @@ repos:
   - repo: https://github.com/combostrap/devfiles
     rev: "{{ _external_data.project_version }}"
     hooks:
-      - id: prevent-out-of-sync-commit
+      - id: git-prevent-out-of-sync-commit
         name: prevent out-of-sync branch commit
 {%- if package_manager == 'maven' %}
-      - id: check-pom-xml
+      - id: maven-check-pom-xml
         name: check pom.xml file
+      - id: maven-install
+        name: install artifacts in local repo
 {%- endif %}
   - repo: https://github.com/editorconfig-checker/editorconfig-checker
     rev: c9d5ed0 # v3.4.1

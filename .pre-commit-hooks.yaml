@@ -1,20 +1,20 @@
-- id: prevent-commit-on-default
+- id: git-prevent-commit-on-default
   name: Prevent a commit on the default branch
   description: |
     Prevent a commit on the default branch
     A Pull Request should be used
-  entry: git-hooks/prevent-commit-on-default
+  entry: git-hooks/git-prevent-commit-on-default
   language: script
   pass_filenames: false
   always_run: true
   stages: [ pre-commit ]
   minimum_pre_commit_version: 3.2.0
-- id: prevent-out-of-sync-commit
+- id: git-prevent-out-of-sync-commit
   name: Prevent a commit on a out-of-sync branch
   description: |
     Prevent a commit on a out-of-sync branch
     A pull should be done first
-  entry: git-hooks/prevent-out-of-sync-commit
+  entry: git-hooks/git-prevent-out-of-sync-commit
   language: script
   pass_filenames: false
   always_run: true
@@ -29,12 +29,21 @@
   pass_filenames: false
   always_run: true
   stages: [ pre-commit ]
-- id: check-pom-xml
+- id: maven-check-pom-xml
   name: check maven pom
   description: |
     Check a maven pom file
-  entry: git-hooks/check-pom-xml
+  entry: git-hooks/maven-check-pom-xml
   language: script
   pass_filenames: false
   files: 'pom\.xml'
   stages: [ pre-commit ]
+- id: maven-install
+  name: Install artifacts in the local repo
+  description: |
+    Install artifacts in the local repo by running maven install
+  entry: git-hooks/maven-install
+  language: script
+  pass_filenames: false # only once
+  files: \.java$ # only when a java file is present
+  stages: [ post-commit ]

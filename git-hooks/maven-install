@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# A hook to install the artifacts locally
+set -TCEeuo pipefail
+
+# Add the artifacts to the local repo
+./mvnw -Dmaven.test.skip=true install
