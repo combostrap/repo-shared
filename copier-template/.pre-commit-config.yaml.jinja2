@@ -36,7 +36,7 @@ repos:
         additional_dependencies: [ '@commitlint/config-conventional' ]
         args: [ "--verbose", "--config", ".config/commitlint.config.js" ]
   - repo: https://github.com/combostrap/devfiles
-    rev: v0.1.2 # devfiles
+    rev: "{{ _external_data.project_version }}"
     hooks:
       - id: prevent-out-of-sync-commit
         name: prevent out-of-sync branch commit

@@ -72,6 +72,13 @@ dependency_manager:
     - dependabot
     - none
 
+# https://copier.readthedocs.io/en/stable/configuring/#external_data
+_external_data:
+  # the tag or full sha version of this devfiles project
+  # Used to define the git hooks in pre-commit-config template .pre-commit-config.yaml.jinja2 at release time
+  # Updating it with yq or sed is a big pain otherwise
+  project_version: "v0.1.2"
+
 # jinja file suffix
 # jinja2 and not jinja because jinja is not mapped to jinja2 by default with Intellij
 _templates_suffix: .jinja2

@@ -13,13 +13,16 @@ export GIT_CLIFF__BUMP__INITIAL_TAG=v0.1.0 # by default it's 0.1.0
 next_version=$(git cliff --unreleased --bump "$bump_type" --context  --tag-pattern "v[0-9]+\\.[0-9]+\\.[0-9]+" | jq -r '.[0].version' | tr -d "v")
 
 # Update in-place the version
-# Backup: Bad in place update will empty the file
-cp copier-template/.pre-commit-config.yaml.jinja2 /tmp/.pre-commit-config.yaml.jinja2.bak
-if ! sed -i "s/rev: .*# devfiles/rev: v$next_version #devfiles/; t; Q1" copier-template/.pre-commit-config.yaml.jinja2; then
-  echo "Substitution has not substituted anything"
-  cp /tmp/.pre-commit-config.yaml.jinja2.bak copier-template/.pre-commit-config.yaml.jinja2
-  exit 1
-fi
+# We patch to keep style formatting
+ORIGIN_NORMALIZED_COPIER=/tmp/copier-origin.yml
+NEW_NORMALIZED_COPIER=/tmp/copier-new.yml
+PATCH_COPIER=/tmp/copier-patch.yml.diff
+yq --exit-status . copier.yml > "$ORIGIN_NORMALIZED_COPIER"
+yq --exit-status "(._external_data.project_version) = \"v$next_version\"" copier.yml > "$NEW_NORMALIZED_COPIER"
+diff "$ORIGIN_NORMALIZED_COPIER" "$NEW_NORMALIZED_COPIER" > "$PATCH_COPIER"
+patch copier.yml "$PATCH_COPIER"
+
+# Commit
 git-commit "chore: release $next_version"
 
 echo "Releasing to the version $next_version"
