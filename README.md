@@ -145,6 +145,11 @@ See the [Git User Configuration Script](dev-scripts/common/git-config-user)
 
 The [editorconfig](https://editorconfig.org/) file is [.editorconfig](copier-template/.editorconfig)
 
+We also use the following `editorconfig` code styling utility:
+  * [shfmt](https://github.com/patrickvane/shfmt) for bash styling
+  * [editorconfig-checker)](https://github.com/editorconfig-checker/editorconfig-checker) as [hook](#git-hooks-and-pre-commit)
+
+
 ### Commit Message Validation (CommitLint)
 
 [commitlint](https://commitlint.js.org/) configuration is located
