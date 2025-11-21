@@ -19,9 +19,20 @@ echo "Updating copier.yml project version"
 ORIGIN_NORMALIZED_COPIER=/tmp/copier-origin.yml
 NEW_NORMALIZED_COPIER=/tmp/copier-new.yml
 PATCH_COPIER=/tmp/copier-patch.yml.diff
-yq --exit-status . copier.yml >"$ORIGIN_NORMALIZED_COPIER"
-yq --exit-status "(._external_data.project_version) = \"v$next_version\"" copier.yml >"$NEW_NORMALIZED_COPIER"
-diff "$ORIGIN_NORMALIZED_COPIER" "$NEW_NORMALIZED_COPIER" >"$PATCH_COPIER"
+rm /tmp/copier-*
+if ! yq --exit-status . copier.yml > "$ORIGIN_NORMALIZED_COPIER"; then
+  echo "  * Normalization failed"
+  exit 1
+fi
+if ! yq --exit-status "(._external_data.project_version) = \"v$next_version\"" copier.yml > "$NEW_NORMALIZED_COPIER"; then
+  echo "  * Updated Normalization failed"
+  exit 1
+fi
+# Exit code is 1 oif there is a diff
+if diff "$ORIGIN_NORMALIZED_COPIER" "$NEW_NORMALIZED_COPIER" > "$PATCH_COPIER"; then
+  echo "  * No Diff found"
+  exit 1
+fi
 patch copier.yml "$PATCH_COPIER"
 if ! grep -q "project_version: \"v$next_version\"" copier.yml; then
   echo "Update failed"
