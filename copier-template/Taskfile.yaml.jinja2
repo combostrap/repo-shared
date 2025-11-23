@@ -12,3 +12,10 @@ tasks:
     cmds:
       - |
         copier update --vcs-ref HEAD .
+{%- if package_manager == 'maven' %}
+  # Install the package locally
+  # -DskipTests and not -Dmaven.test.skip so that test packaging is not skipped
+  install:
+    cmds:
+      - mvn install -DskipTests
+{%- endif %}

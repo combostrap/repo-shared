@@ -14,7 +14,9 @@ on:
       - 'main'
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    # Slim is one CPU vs 4 for the standard ubuntu-latest
+    # Price is at the core by minutes
+    runs-on: ubuntu-slim
     steps:
 
       - name: Git Checkout ${{ github.ref_name }}
@@ -29,6 +31,17 @@ jobs:
           gpg --batch --yes --passphrase "${{ secrets.GPG_SOFTWARE_SIGNING_PASSPHRASE }}" --import <(echo "${{ secrets.GPG_SOFTWARE_SIGNING_KEY }}")
 
       - name: Publish package
+        env:
+          # https://central.sonatype.com/usertoken
+          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          # For snapshot, needed by JReleaser
+          JRELEASER_NEXUS2_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          # Gpg for signing
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_SOFTWARE_SIGNING_PASSPHRASE }}
+          # GitHub Token for release creation
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
 
           set -TCEeuo pipefail
@@ -42,15 +55,3 @@ jobs:
           # Deploy snapshot or release
           echo "Deploy snapshot or release"
           ./mvnw --batch-mode jreleaser:deploy
-
-        env:
-          # https://central.sonatype.com/usertoken
-          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          # For snapshot, needed by JReleaser
-          JRELEASER_NEXUS2_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          # Gpg for signing
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_SOFTWARE_SIGNING_PASSPHRASE }}
-          # GitHub Token for release creation
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

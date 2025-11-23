@@ -75,6 +75,7 @@ dependency_manager:
 # the tag or full sha version of this devfiles project
 # Used to define the git hooks in pre-commit-config template .pre-commit-config.yaml.jinja2 at release time
 # Updating it with yq or sed is a big pain otherwise
+# Ref: https://copier.readthedocs.io/en/stable/faq/#how-to-lock-a-computed-value
 project_version:
   type: str
   default: "v0.1.3"
