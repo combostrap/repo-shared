@@ -146,7 +146,7 @@ See the [Git User Configuration Script](dev-scripts/setup/git-config.sh)
 The [editorconfig](https://editorconfig.org/) file is [.editorconfig](copier-template/.editorconfig)
 
 We also use the following `editorconfig` code styling utility:
-  * [shfmt](https://github.com/patrickvane/shfmt) for bash styling
+  * [shfmt](https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples) for bash styling
   * [editorconfig-checker)](https://github.com/editorconfig-checker/editorconfig-checker) as [hook](#git-hooks-and-pre-commit)
 
 
