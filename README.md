@@ -219,6 +219,8 @@ In your scripts, you can use the following env:
 
 | Syntax                   | Description                                                          |
 |--------------------------|----------------------------------------------------------------------|
+| `PROJECT_ID`             | The organization name / project name                                 |
+| `PROJECT_NAME`           | The project name                                                     |
 | `PROJECT_ROOT`           | The root directory of the git repo (ie `GIT_ROOT` without submodule) |
 | `ORGANISATION_NAME`      | The organization name                                                |
 | `ORGANISATION_ENV_NAME`  | The organization name in a env format                                |

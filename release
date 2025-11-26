@@ -24,7 +24,7 @@ if ! yq --exit-status . copier.yml > "$ORIGIN_NORMALIZED_COPIER"; then
   echo "  * Normalization failed"
   exit 1
 fi
-if ! yq --exit-status "(.project_version.default) = \"v$next_version\"" copier.yml > "$NEW_NORMALIZED_COPIER"; then
+if ! yq --exit-status "(.devfiles_version.default) = \"v$next_version\"" copier.yml > "$NEW_NORMALIZED_COPIER"; then
   echo "  * Updated Normalization failed"
   exit 1
 fi
@@ -34,7 +34,7 @@ if diff "$ORIGIN_NORMALIZED_COPIER" "$NEW_NORMALIZED_COPIER" > "$PATCH_COPIER"; 
   # we don't exit as it may be the recreation of a release
 fi
 patch copier.yml "$PATCH_COPIER"
-if ! grep -q "project_version: \"v$next_version\"" copier.yml; then
+if ! grep -q "devfiles_version: \"v$next_version\"" copier.yml; then
   echo "Update failed"
   exit 1
 fi

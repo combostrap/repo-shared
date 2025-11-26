@@ -3,11 +3,19 @@
 ###################
 organisation_name:
   type: str
-  validator: "{% if organisation == '' %}Must not be empty{% endif %}"
+  validator: "{% if organisation_name == '' %}Must not be empty{% endif %}"
   help: |
     Organization ?
     Generally the owner name of your repo
     ie `orga` in https://github.com/orga/repo
+
+project_name:
+  type: str
+  validator: "{% if project_name == '' %}Must not be empty{% endif %}"
+  help: |
+    Project Name ?
+    Generally the name of your repo
+    ie `repo` in https://github.com/orga/repo
 
 copyright_year:
   type: int
@@ -76,13 +84,13 @@ dependency_manager:
 # Used to define the git hooks in pre-commit-config template .pre-commit-config.yaml.jinja2 at release time
 # Updating it with yq or sed is a big pain otherwise
 # Ref: https://copier.readthedocs.io/en/stable/faq/#how-to-lock-a-computed-value
-project_version:
+devfiles_version:
   type: str
   default: "v0.1.3"
   when: false # never ask about it as it's constant
 
 # External can be used only in copier.yml not in template
-# to use a variable in a template, create a question with a false condition see project_version as example
+# to use a variable in a template, create a question with a false condition see devfiles_version as example
 # https://copier.readthedocs.io/en/stable/configuring/#external_data
 # _external_data:
 

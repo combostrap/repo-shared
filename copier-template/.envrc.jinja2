@@ -16,8 +16,12 @@ export ORGANISATION_NAME="{{ organisation_name }}"
 export ORGANISATION_ENV_NAME="{{ organisation_name | replace('-', '_') | upper }}"
 # Name used in path
 export ORGANISATION_PATH_NAME="{{ organisation_name | replace('_', '-') | lower }}"
+# Name of the project use as identifier with the organization name
+export PROJECT_NAME="{{ project_name | replace('_', '-') | lower }}"
 # Used by script to get the root
 export PROJECT_ROOT="$PWD"
+# ProjectId
+export PROJECT_ID="$ORGANISATION_NAME/$PROJECT_NAME"
 # The package manager
 export PACKAGE_MANAGER="{{ package_manager }}"
 
