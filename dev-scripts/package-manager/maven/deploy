@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -TCEeuo pipefail # Strict Bash
 
-# Deploy to maven central
+# Deploy a library to maven central
 # Ref: https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_maven
 # The version should be correct in the pom.xml
 
