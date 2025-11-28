@@ -10,6 +10,7 @@ on:
   push:
     paths:
       - 'pom.xml'
+      - '**.java'
     branches:
       - 'main'
 jobs:
@@ -41,9 +42,23 @@ jobs:
       # Ref
       # https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_maven
       - name: Publish package
+        env:
+          # https://central.sonatype.com/usertoken
+          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          # For snapshot, needed by JReleaser
+          JRELEASER_NEXUS2_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          # Gpg for signing
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_SOFTWARE_SIGNING_PASSPHRASE }}
+          # GitHub Token for release creation
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
 
           set -TCEeuo pipefail
+
+          echo "Test"
+          ./mvnw --batch-mode -s .github/cd-maven-settings.xml test
 
           echo "Check config"
           if ! CHECK_CONFIG=$(./mvnw --batch-mode -s .github/cd-maven-settings.xml --quiet jreleaser:config); then
@@ -62,16 +77,4 @@ jobs:
           # Deploy snapshot or release
           # https://jreleaser.org/guide/latest/tools/jreleaser-maven.html#_jreleaserdeploy
           echo "Deploy snapshot or release"
-          ./mvnw --batch-mode -s .github/cd-maven-settings.xml jreleaser:deploy
-
-        env:
-          # https://central.sonatype.com/usertoken
-          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          # For snapshot, needed by JReleaser
-          JRELEASER_NEXUS2_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          JRELEASER_NEXUS2_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          # Gpg for signing
-          JRELEASER_GPG_PASSPHRASE: ${{ secrets.GPG_SOFTWARE_SIGNING_PASSPHRASE }}
-          # GitHub Token for release creation
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ./mvnw --batch-mode -s .github/cd-maven-settings.xml -DskipTests jreleaser:deploy
