@@ -15,7 +15,8 @@ EFFECTIVE_POM=/tmp/effective-pom.xml
 # We filter out also the lines:
 # Downloaded from central:  https://repo.maven.apache
 # Downloading from central: https://repo.maven.apache (This second line was a human error. It seems that the term is downloaded, not downloading)
-if ! LOG=$(./mvnw help:effective-pom -Dorg.slf4j.simpleLogger.defaultLogLevel=warn -Doutput="$EFFECTIVE_POM" | grep --invert-match -e "^Download" ); then
+# Grep returns always true
+if ! LOG=$(./mvnw help:effective-pom -Dorg.slf4j.simpleLogger.defaultLogLevel=warn -Doutput="$EFFECTIVE_POM" | (grep --invert-match -e "^Download" || true)); then
   printf 'Error mvn effective command failed\n%s' "$LOG"
   exit 1
 fi
