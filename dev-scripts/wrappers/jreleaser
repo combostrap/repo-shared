@@ -3,8 +3,8 @@
 
 set -TCEeuo pipefail
 
-if [ -z "$ORGANISATION_PATH_NAME" ]; then
-  echo "ERROR: ORGANISATION_PATH_NAME environment variable is not set"
+if [ "${ORGANIZATION_PATH_NAME}" == "" ]; then
+  echo "ERROR: ORGANIZATION_PATH_NAME environment variable is not set"
   exit 1
 fi
 
@@ -12,10 +12,10 @@ if [ "$PACKAGE_MANAGER" == "maven" ]; then
 
   # For release
   export JRELEASER_MAVENCENTRAL_USERNAME
-  JRELEASER_MAVENCENTRAL_USERNAME=$(pass "$ORGANISATION_PATH_NAME/sonatype/username")
+  JRELEASER_MAVENCENTRAL_USERNAME=$(pass "$ORGANIZATION_PATH_NAME/sonatype/username")
 
   export JRELEASER_MAVENCENTRAL_PASSWORD
-  JRELEASER_MAVENCENTRAL_PASSWORD=$(pass "$ORGANISATION_PATH_NAME/sonatype/password")
+  JRELEASER_MAVENCENTRAL_PASSWORD=$(pass "$ORGANIZATION_PATH_NAME/sonatype/password")
 
   # For snapshot
   export JRELEASER_NEXUS2_USERNAME="${JRELEASER_MAVENCENTRAL_USERNAME}"
@@ -23,7 +23,7 @@ if [ "$PACKAGE_MANAGER" == "maven" ]; then
 
 fi
 
-PASSPHRASE_PATH="$ORGANISATION_PATH_NAME/gpg/software-signing-key-passphrase"
+PASSPHRASE_PATH="$ORGANIZATION_PATH_NAME/gpg/software-signing-key-passphrase"
 if ! PASSPHRASE_VALUE=$(pass "$PASSPHRASE_PATH" 2> /dev/null); then
   echo "Note: No gpg passphrase setup. No secret found at the pass path: $PASSPHRASE_PATH"
   PASSPHRASE_VALUE="yolo"
@@ -32,7 +32,7 @@ fi
 export JRELEASER_GPG_PASSPHRASE="$PASSPHRASE_VALUE"
 
 # Github
-GITHUB_TOKEN_PATH="$ORGANISATION_PATH_NAME/github/release-token"
+GITHUB_TOKEN_PATH="$ORGANIZATION_PATH_NAME/github/release-token"
 if GITHUB_TOKEN_VALUE=$(pass "$GITHUB_TOKEN_PATH"); then
   # for the docker upload
   export JRELEASER_GITHUB_TOKEN="$GITHUB_TOKEN_VALUE"

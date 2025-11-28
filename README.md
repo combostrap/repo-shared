@@ -107,7 +107,7 @@ All secrets are located under the organization name.
 Example for a GitHub token:
 
 ```bash
-pass "$ORGANISATION_PATH_NAME/github/release-token"
+pass "$ORGANIZATION_PATH_NAME/github/release-token"
 ```
 
 Note:
@@ -225,9 +225,9 @@ In your scripts, you can use the following env:
 | `PROJECT_ID`             | The organization name / project name                                 |
 | `PROJECT_NAME`           | The project name                                                     |
 | `PROJECT_ROOT`           | The root directory of the git repo (ie `GIT_ROOT` without submodule) |
-| `ORGANISATION_NAME`      | The organization name                                                |
-| `ORGANISATION_ENV_NAME`  | The organization name in a env format                                |
-| `ORGANISATION_PATH_NAME` | The organization name in a file path format                          |
+| `ORGANIZATION_NAME`      | The organization name                                                |
+| `ORGANIZATION_ENV_NAME`  | The organization name in a env format                                |
+| `ORGANIZATION_PATH_NAME` | The organization name in a file path format                          |
 
 ### Git Hooks and Pre-commit
 

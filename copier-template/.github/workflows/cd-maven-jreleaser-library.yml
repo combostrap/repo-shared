@@ -16,6 +16,7 @@ jobs:
   publish:
     # Slim is one CPU vs 4 for the standard ubuntu-latest
     # Price is at the core by minutes
+    # We need to install java, and it's slower so it's maybe not a gain
     runs-on: ubuntu-slim
     steps:
 
@@ -37,6 +38,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      # Ref
+      # https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_maven
       - name: Publish package
         run: |
 
@@ -50,9 +53,14 @@ jobs:
           fi
 
           echo "Stage Artifacts"
+          # The publication profile should be in the parent or the pom
+          # as seen here: https://jreleaser.org/guide/latest/examples/maven/maven-central.html#_maven
+          # and here: https://jreleaser.org/guide/latest/examples/maven/staging-artifacts.html
+          # It will attach the maven-javadoc-plugin and maven-source-plugin
           ./mvnw --batch-mode -s .github/cd-maven-settings.xml --quiet -Ppublication
 
           # Deploy snapshot or release
+          # https://jreleaser.org/guide/latest/tools/jreleaser-maven.html#_jreleaserdeploy
           echo "Deploy snapshot or release"
           ./mvnw --batch-mode -s .github/cd-maven-settings.xml jreleaser:deploy
 

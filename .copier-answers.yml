@@ -7,7 +7,7 @@ copyright_owner: combostrap
 copyright_year: 2025
 dependency_manager: none
 license_type: Apache-2.0
-organisation_name: combostrap
+organization_name: combostrap
 package_manager: none
 project_name: devfiles
 releaser: jreleaser
