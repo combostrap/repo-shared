@@ -14,7 +14,7 @@ tasks:
     cmds:
       - mvn install -DskipTests
 {%- endif %}
-{%- if package_manager == 'maven' and (application_type == 'pom' or application_type == 'library' %}
+{%- if package_manager == 'maven' and (application_type == 'pom' or application_type == 'library') %}
   # Deploy the snapshot to maven central
   deploy:
     cmds:
