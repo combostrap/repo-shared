@@ -9,10 +9,11 @@ tasks:
         copier update --vcs-ref HEAD .
 {%- if package_manager == 'maven' %}
   # Install the package locally
-  # -DskipTests and not -Dmaven.test.skip so that test packaging is not skipped
+  # * -DskipTests and not -Dmaven.test.skip so that test packaging is not skipped
+  # * use --update-snapshots if the dependency pom was changed
   install:
     cmds:
-      - ./mvnw install -DskipTests --update-snapshots
+      - ./mvnw install -DskipTests
 {%- endif %}
 {%- if package_manager == 'maven' and (application_type == 'pom' or application_type == 'library') %}
   # Deploy the snapshot to maven central
