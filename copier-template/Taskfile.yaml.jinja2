@@ -14,11 +14,11 @@ tasks:
   install:
     cmds:
       - ./mvnw install -DskipTests
-  # Quick check to get all java docs error/warning
-  # grep "error" to see only the errors
+  # Quick check to get all java docs error
+  # Without javadoc, no publication to central
   javadoc:
     cmds:
-      - ./mvnw javadoc:javadoc -q
+      - ./mvnw javadoc:javadoc -q | grep "error"
 {%- endif %}
 {%- if package_manager == 'maven' and (application_type == 'pom' or application_type == 'library') %}
   # Deploy the snapshot to maven central
