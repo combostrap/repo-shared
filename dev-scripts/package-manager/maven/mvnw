@@ -5,27 +5,52 @@
 
 set -TCEeuo pipefail
 
-if [ -z "$ORGANIZATION_NAME" ]; then
-  echo "ERROR: ORGANIZATION_NAME environment variable is not set"
+# Define colors
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+if [ -z "$ORGANIZATION_PATH_NAME" ]; then
+  echo "ERROR: ORGANIZATION_PATH_NAME environment variable is not set"
   exit 1
 fi
-ORGANIZATION_NAME_NORMALIZED=$(echo "$ORGANIZATION_NAME" | tr '[:upper:]' '[:lower:]' | tr '_' '-' )
 
-export JRELEASER_MAVENCENTRAL_USERNAME
-JRELEASER_MAVENCENTRAL_USERNAME=$(pass "$ORGANIZATION_NAME_NORMALIZED/sonatype/username")
+# For release/snapshot
+SONATYPE_USERNAME_PATH="$ORGANIZATION_PATH_NAME/sonatype/username"
+if SONATYPE_USERNAME_VALUE=$(pass "$SONATYPE_USERNAME_PATH" 2> /dev/null); then
+  export JRELEASER_MAVENCENTRAL_USERNAME="$SONATYPE_USERNAME_VALUE"
+  # For snapshot
+  export JRELEASER_NEXUS2_USERNAME="${JRELEASER_MAVENCENTRAL_USERNAME}"
+  SONATYPE_PASSWORD_PATH="$ORGANIZATION_PATH_NAME/sonatype/password"
+  if SONATYPE_PASSWORD_VALUE=$(pass "$SONATYPE_PASSWORD_PATH" 2> /dev/null); then
+    export JRELEASER_MAVENCENTRAL_PASSWORD="$SONATYPE_PASSWORD_VALUE"
+    # For snapshot
+    export JRELEASER_NEXUS2_PASSWORD="${JRELEASER_MAVENCENTRAL_PASSWORD}"
+  else
+    echo -e "${RED}User $JRELEASER_MAVENCENTRAL_USERNAME found but no sonatype password found at $SONATYPE_PASSWORD_PATH${NC}"
+    exit 1
+  fi
+else
+  echo -e "${YELLOW}Note: No maven central sonatype user found at: $SONATYPE_USERNAME_PATH${NC}"
+fi
 
-export JRELEASER_MAVENCENTRAL_PASSWORD
-JRELEASER_MAVENCENTRAL_PASSWORD=$(pass "$ORGANIZATION_NAME_NORMALIZED/sonatype/password")
+PASSPHRASE_PATH="$ORGANIZATION_PATH_NAME/gpg/software-signing-key-passphrase"
+if ! PASSPHRASE_VALUE=$(pass "$PASSPHRASE_PATH" 2> /dev/null); then
+  echo -e "${YELLOW}Note: No gpg passphrase found at the pass path: $PASSPHRASE_PATH${NC}"
+  PASSPHRASE_VALUE="yolo"
+fi
+# JReleaser make it mandatory even if it's a command
+export JRELEASER_GPG_PASSPHRASE="$PASSPHRASE_VALUE"
 
-export JRELEASER_GPG_PASSPHRASE
-JRELEASER_GPG_PASSPHRASE=$(pass "$ORGANIZATION_NAME_NORMALIZED/gpg/software-signing-key-passphrase")
-
-export JRELEASER_GITHUB_TOKEN
-JRELEASER_GITHUB_TOKEN=$(pass "$ORGANIZATION_NAME_NORMALIZED/github/release-token")
-
-# For snapshot
-export JRELEASER_NEXUS2_USERNAME="${JRELEASER_MAVENCENTRAL_USERNAME}"
-export JRELEASER_NEXUS2_PASSWORD="${JRELEASER_MAVENCENTRAL_PASSWORD}"
+# Github
+GITHUB_TOKEN_PATH="$ORGANIZATION_PATH_NAME/github/release-token"
+if GITHUB_TOKEN_VALUE=$(pass "$GITHUB_TOKEN_PATH" 2> /dev/null); then
+  # for the docker upload
+  export JRELEASER_GITHUB_TOKEN="$GITHUB_TOKEN_VALUE"
+  export JRELEASER_DOCKER_GHCR_IO_PASSWORD="$GITHUB_TOKEN_VALUE"
+else
+  echo -e "${YELLOW}Note: No github token found at the pass path: $GITHUB_TOKEN_PATH${NC}"
+fi
 
 # Run
 # We select the second in path order
